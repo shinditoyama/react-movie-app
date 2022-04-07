@@ -1,0 +1,22 @@
+.movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movie img {
+    width: 180px;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s;
+}
+
+.movie img:hover {
+    transform: scale(1.1);
+}
+
+.movie span {
+    font-weight: bold;
+    font-size: 120%;
+}
+
