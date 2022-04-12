@@ -15,8 +15,18 @@ export const fetchGenres = createAsyncThunk('genre/fetchGenres', async (type) =>
 export const genreSlice = createSlice({
     name: 'genre',
     initialState: {
+        getMovie: '',
+        getSerie: '',
         list: [],
         status: null
+    },
+    reducer: {
+        getMovie: (state, action) => {
+            state.getMovie = action.payload;
+        },
+        getSerie: (state, action) => {
+            state.getSerie = action.payload;
+        }
     },
     extraReducers: {
         [fetchGenres.pending]: (state, action) => {
@@ -35,7 +45,10 @@ export const genreSlice = createSlice({
     }
 });
 
-//export const { } = genreSlice.actions;
+export const { getMovie, getSerie } = genreSlice.actions;
+
+export const genreMovieSelector = (state) => state.genre.gMovie;
+export const genreSerieSelector = (state) => state.genre.gSerie;
 
 export const genreSelector = (state) => state.genre.list;
 export const statusSelector = (state) => state.genre.status;

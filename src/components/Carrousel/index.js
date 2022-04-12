@@ -34,10 +34,21 @@ const Carrousel = ({ title, type, filter }) => {
             <Swiper
                 modules={[Navigation]}
                 spaceBetween={30}
-                slidesPerView={6}
+                slidesPerView={5}
+                /*breakpoints={{
+                    0: {
+                        width: 275,
+                        slidesPerView: 1,
+                    },
+                    1200: {
+                        width: 1200,
+                        slidesPerView: 5,
+                    }
+                }}*/
                 navigation
-                onSlideChange={() => {}}
-                onSwiper={(swiper) => {}}
+                onSlideChange={() => { }}
+                onSwiper={(swiper) => { }}
+
             >
                 {movies.map((movie, key) => {
                     return (

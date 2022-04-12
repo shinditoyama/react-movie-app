@@ -10,7 +10,7 @@ const Serie = () => {
         <Layout>
             <div className="d-flex justify-content-between align-items-center">
                 <h1 className="ps-4">Series</h1>
-                <Genres type="tv" gen={genero} setGen={setGenero} />
+                <Genres type="tv" genero={genero} setGenero={setGenero} />
             </div>
             <ListItem type="tv" filter="popular" genero={genero} />
         </Layout>

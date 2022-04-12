@@ -1,4 +1,5 @@
 import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const Layout = (props) => {
     return (
@@ -7,6 +8,7 @@ const Layout = (props) => {
             <div className="container-fluid p-4">
                 {props.children}
             </div>
+            <Footer />
         </div>
     )
 }
