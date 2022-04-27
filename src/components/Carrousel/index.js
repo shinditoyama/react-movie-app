@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import api from "../../services/api";
-import api_key from "../../services/key";
-
 import { Link } from 'react-router-dom';
+import { Environment } from "../../config";
+import api from "../../services/api";
 import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -11,14 +10,12 @@ import './styles.css';
 
 const Carrousel = ({ title, type, filter }) => {
     const [movies, setMovies] = useState([]);
-    const image_path = 'https://image.tmdb.org/t/p/w500';
 
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const response = await api.get(`/${type}/${filter}?api_key=${api_key}&language=en-US&page=1`);
+                const response = await api.get(`/${type}/${filter}?api_key=${Environment.API_KEY}&page=1`);
                 const data = response.data.results;
-
                 setMovies(data);
             } catch (err) {
                 alert(err.message);
@@ -34,8 +31,7 @@ const Carrousel = ({ title, type, filter }) => {
             <Swiper
                 modules={[Navigation]}
                 spaceBetween={30}
-                slidesPerView={5}
-                /*breakpoints={{
+                breakpoints={{
                     0: {
                         width: 275,
                         slidesPerView: 1,
@@ -44,16 +40,15 @@ const Carrousel = ({ title, type, filter }) => {
                         width: 1200,
                         slidesPerView: 5,
                     }
-                }}*/
+                }}
                 navigation
                 onSlideChange={() => { }}
                 onSwiper={(swiper) => { }}
-
             >
-                {movies.map((movie, key) => {
+                {movies.map((item, key) => {
                     return (
                         <SwiperSlide key={key} className="swiper-slide">
-                            <Link to={`/${type}/details/${movie.id}`}><img src={`${image_path}${movie.poster_path}`} /></Link>
+                            <Link to={`/${type}/details/${item.id}`}><img src={`${Environment.IMAGE_BASE_URL}${item.poster_path}`} /></Link>
                         </SwiperSlide>
                     )
                 })}

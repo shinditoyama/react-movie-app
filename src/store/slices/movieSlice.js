@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Environment } from "../../config";
 import api from "../../services/api";
-import api_key from "../../services/key";
 
-export const fetchMovies = createAsyncThunk('movie/fetchMovies', async (genero) => {
+export const fetchMovies = createAsyncThunk('movie/fetchMovies', async (filter) => {
     try {
-        const response = await api.get(`/movie/popular?api_key=${api_key}&language=en-US&page=1&with_genres=${genero}`);
+        const response = await api.get(`/movie/${filter}?api_key=${Environment.API_KEY}&page=1`);
         const data = response.data.results;
         return data;
     } catch (err) {
@@ -19,18 +19,16 @@ export const movieSlice = createSlice({
         status: null
     },
     extraReducers: {
-        [fetchMovies.pending]: (state, action) => {
+        [fetchMovies.pending]: (state) => {
             state.status = 'loading'
-            //console.log('loading');
         },
         [fetchMovies.fulfilled]: (state, action) => {
             state.list = action.payload
             state.status = 'sucess'
-            //console.log('sucess');
+            //console.log(state.list);
         },
-        [fetchMovies.rejected]: (state, action) => {
+        [fetchMovies.rejected]: (state) => {
             state.status = 'failed'
-            //console.log('failed');
         }
     }
 });

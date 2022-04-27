@@ -1,26 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGenres, genreSelector, getMovie, genreMovieSelector } from "../../store/features/genreSlice";
+import { fetchGenres } from "../../store/slices/genreSlice";
 
-const Genres = ({ type, genero, setGenero }) => {
+const Genres = ({ type, genero, changeGenre }) => {
     const dispatch = useDispatch();
-    const genres = useSelector(genreSelector);
-    //const genreMovie = useSelector(genreMovieSelector);
+    const genres = useSelector((state) => state.genre.list);
 
     useEffect(() => {
         dispatch(fetchGenres(type));
     }, [dispatch]);
 
-    /*const handleChange = (e) => {
-        dispatch(getMovie(e.target.value));
-    }*/
-
     return (
         <div className="p-4">
-            <select className="form-select" value={genero} onChange={(e) => { setGenero(e.target.value) }}>
+            <select className="form-select" value={genero} onChange={(e) => changeGenre(e)}>
                 <option value="">All</option>
-                {genres.map((movie, key) => (
-                    <option key={key} value={movie.id}>{movie.name}</option>
+                {genres.map((item, key) => (
+                    <option key={key} value={item.id}>{item.name}</option>
                 ))}
             </select>
         </div>

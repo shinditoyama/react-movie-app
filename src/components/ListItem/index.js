@@ -1,18 +1,18 @@
 import "./styles.css";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies, movieSelector } from "../../store/features/movieSlice";
+import { Environment } from "../../config";
 import api from "../../services/api";
-import api_key from "../../services/key";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Item from "../Item";
 
 const ListItem = ({ type, filter, genero }) => {
     const [fetch, setFetch] = useState([]);
+    const [page, setpage] = useState(2);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const getData = async () => {
             try {
-                const response = await api.get(`/${type}/${filter}?api_key=${api_key}&language=en-US&page=1&with_genres=${genero}`);
+                const response = await api.get(`/${type}/${filter}?api_key=${Environment.API_KEY}&page=1&with_genres=${genero}`);
                 const data = response.data.results;
                 setFetch(data);
             } catch (err) {
@@ -20,16 +20,45 @@ const ListItem = ({ type, filter, genero }) => {
             }
         };
 
-        fetchData();
+        getData();
     }, [genero]);
 
+    const fetchMovies = async () => {
+        const res = await api.get(`/${type}/${filter}?api_key=${Environment.API_KEY}&page=${page}&with_genres=${genero}`);
+        const data = res.data.results;
+        return data;
+    };
+
+    const fetchData = async () => {
+        const commentsFormServer = await fetchMovies();
+        setFetch([...fetch, ...commentsFormServer]);
+        setpage(page + 1);
+    }
+
     return (
-        <div className="item-list">
+        <InfiniteScroll
+            className="item-list"
+            dataLength={fetch.length}
+            next={fetchData}
+            hasMore={true}
+            loader={
+                <div class="text-center">
+                    <div class="spinner-grow" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            }
+            endMessage={
+                <p style={{ textAlign: 'center' }}>
+                    <b>Yay! You have seen it all</b>
+                </p>
+            }
+        >
             {fetch.map((movie, key) => (
                 <Item data={movie} key={key} type={type} />
             ))}
-        </div>
-    )
+        </InfiniteScroll>
+    );
 }
 
 export default ListItem;

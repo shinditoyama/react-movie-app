@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Environment } from "../../config";
 import api from "../../services/api";
-import api_key from "../../services/key";
 
 export const fetchGenres = createAsyncThunk('genre/fetchGenres', async (type) => {
     try {
-        const response = await api.get(`/genre/${type}/list?api_key=${api_key}&language=en-US`);
+        const response = await api.get(`/genre/${type}/list?api_key=${Environment.API_KEY}`);
         const data = response.data.genres;
         return data
     } catch (err) {
@@ -29,28 +29,20 @@ export const genreSlice = createSlice({
         }
     },
     extraReducers: {
-        [fetchGenres.pending]: (state, action) => {
+        [fetchGenres.pending]: (state) => {
             state.status = 'loading'
-            //console.log('loading');
         },
         [fetchGenres.fulfilled]: (state, action) => {
             state.list = action.payload
             state.status = 'sucess'
-            //console.log('sucess');
+            //console.log(state.list);
         },
-        [fetchGenres.rejected]: (state, action) => {
+        [fetchGenres.rejected]: (state) => {
             state.status = 'failed'
-            //console.log('failed');
         }
     }
 });
 
 export const { getMovie, getSerie } = genreSlice.actions;
-
-export const genreMovieSelector = (state) => state.genre.gMovie;
-export const genreSerieSelector = (state) => state.genre.gSerie;
-
-export const genreSelector = (state) => state.genre.list;
-export const statusSelector = (state) => state.genre.status;
 
 export default genreSlice.reducer;

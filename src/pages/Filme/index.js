@@ -2,20 +2,28 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import Genres from "../../components/Genres";
 import ListItem from "../../components/ListItem";
+import Title from "../../components/Title";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getMovie, genreMovieSelector } from "../../store/features/genreSlice";
+import { getMovie } from "../../store/slices/genreSlice";
 
 const Filme = () => {
-    const [genero, setGenero] = useState();
+    const dispatch = useDispatch();
+    const gMovie = useSelector((state) => state.genre.getMovie);
+    const [filterMovie, setFilterMovie] = useState(gMovie);
+
+    const updateFilter = (e) => {
+        setFilterMovie(e.target.value);
+        dispatch(getMovie(e.target.value));
+    };
 
     return (
         <Layout>
             <div className="d-flex justify-content-between align-items-center">
-                <h1 className="ps-4">Filmes</h1>
-                <Genres type="movie" genero={genero} setGenero={setGenero} />
+                <Title title="Filmes" />
+                <Genres type="movie" genero={filterMovie} changeGenre={updateFilter} />
             </div>
-            <ListItem type="movie" filter="popular" genero={genero} />
+            <ListItem type="movie" filter="popular" genero={filterMovie} />
         </Layout>
     )
 }
