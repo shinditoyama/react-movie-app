@@ -1,6 +1,5 @@
 import "./styles.css";
 import { useState, useEffect } from "react";
-import { Environment } from "../../config";
 import api from "../../services/api";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Item from "../Item";
@@ -12,7 +11,7 @@ const ListItem = ({ type, filter, genero }) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await api.get(`/${type}/${filter}?api_key=${Environment.API_KEY}&page=1&with_genres=${genero}`);
+                const response = await api.get(`/${type}/${filter}?api_key=${process.env.REACT_APP_API_KEY}&page=1&with_genres=${genero}`);
                 const data = response.data.results;
                 setFetch(data);
             } catch (err) {
@@ -24,7 +23,7 @@ const ListItem = ({ type, filter, genero }) => {
     }, [genero]);
 
     const fetchMovies = async () => {
-        const res = await api.get(`/${type}/${filter}?api_key=${Environment.API_KEY}&page=${page}&with_genres=${genero}`);
+        const res = await api.get(`/${type}/${filter}?api_key=${process.env.REACT_APP_API_KEY}&page=${page}&with_genres=${genero}`);
         const data = res.data.results;
         return data;
     };
@@ -42,9 +41,9 @@ const ListItem = ({ type, filter, genero }) => {
             next={fetchData}
             hasMore={true}
             loader={
-                <div class="text-center">
-                    <div class="spinner-grow" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                <div className="text-center">
+                    <div className="spinner-grow" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             }

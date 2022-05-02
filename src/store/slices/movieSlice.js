@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Environment } from "../../config";
 import api from "../../services/api";
 
 export const fetchMovies = createAsyncThunk('movie/fetchMovies', async (filter) => {
     try {
-        const response = await api.get(`/movie/${filter}?api_key=${Environment.API_KEY}&page=1`);
+        const response = await api.get(`/movie/${filter}?api_key=${process.env.REACT_APP_API_KEY}&page=1`);
         const data = response.data.results;
         return data;
     } catch (err) {

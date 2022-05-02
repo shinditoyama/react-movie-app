@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Environment } from "../../config";
 import api from "../../services/api";
 
 export const fetchGenres = createAsyncThunk('genre/fetchGenres', async (type) => {
     try {
-        const response = await api.get(`/genre/${type}/list?api_key=${Environment.API_KEY}`);
+        const response = await api.get(`/genre/${type}/list?api_key=${process.env.REACT_APP_API_KEY}`);
         const data = response.data.genres;
         return data
     } catch (err) {

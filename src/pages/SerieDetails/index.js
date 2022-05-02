@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Environment } from "../../config";
 import api from "../../services/api";
 
 const SerieDetails = () => {
@@ -10,14 +9,14 @@ const SerieDetails = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await api.get(`/tv/${id}?api_key=${Environment.API_KEY}`);
+                const response = await api.get(`/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}`);
                 const data = response.data;
 
                 const details = {
                     id,
                     title: data.name,
                     sinopse: data.overview,
-                    image: `${Environment.IMAGE_BASE_URL}${data.poster_path}`,
+                    image: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
                     seasons: data.number_of_seasons
                 }
                 

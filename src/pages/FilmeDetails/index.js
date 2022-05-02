@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Environment } from "../../config";
 import api from "../../services/api";
 
 const FilmeDetails = () => {
@@ -10,14 +9,14 @@ const FilmeDetails = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await api.get(`/movie/${id}?api_key=${Environment.API_KEY}`);
+                const response = await api.get(`/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`);
                 const data = response.data;
 
                 const details = {
                     id,
                     title: data.title,
                     sinopse: data.overview,
-                    image: `${Environment.IMAGE_BASE_URL}${data.poster_path}`,
+                    image: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
                     releaseDate: data.release_date
                 }
 
