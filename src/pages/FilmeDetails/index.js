@@ -30,15 +30,21 @@ const FilmeDetails = () => {
     }, [id]);
 
     return (
-        <div className="movie-content">
-            <img className="movie-img" src={detail.image} />
-            <div className="details">
-                <h1 className="mb-4">{detail.title}</h1>
-                <p>Sinopse: {detail.sinopse}</p>
-                <p className="release-date">Data Lançemento: {detail.releaseDate}</p>
-                <div>
-                    <a href={`https://www.themoviedb.org/movie/${detail.id}`}><button className="btn btn-success me-2">Link</button></a>
-                    <Link to={-1}><button className="btn btn-danger">Voltar</button></Link>
+        <div className="container">
+            <div className="row justify-content-center align-items-center vh-100">
+                <div className="col-sm col-md-4">
+                    <img className="movie-img my-3" src={detail.image} alt="movie" />
+                </div>
+                <div className="col-sm col-md-8">
+                    <div className="details">
+                        <h1 className="mb-4">{detail.title}</h1>
+                        <p>Sinopse: {detail.sinopse}</p>
+                        <p className="release-date">Data Lançemento: {detail.releaseDate}</p>
+                        <div>
+                            <a href={`https://www.themoviedb.org/movie/${detail.id}`}><button className="btn btn-success me-2">Link</button></a>
+                            <Link to={-1}><button className="btn btn-danger">Voltar</button></Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
