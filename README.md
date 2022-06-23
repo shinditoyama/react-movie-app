@@ -4,6 +4,10 @@
 
 **live demo: [https://shindi-movie-app.netlify.app/](https://shindi-movie-app.netlify.app/)**
 
+## Descrição
+
+Este é uma aplicação React que permite ao usuário pesquisar filmes que deseja assistir a partir da API The Movie Database (TMDB).
+
 ## Ferramentas utilizadas
 
 - [React](https://reactjs.org/)
